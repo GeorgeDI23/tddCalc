@@ -52,4 +52,17 @@ public class CalculatorTest {
         //Then
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void addUnknownAmountOfNumbers(){
+        //Given
+        String given = "1,2,3,4,5,6,7,8,9,45";
+        int expected = 90;
+
+        //When
+        int actual = calc.add(given);
+
+        //Then
+        assertEquals(expected, actual);
+    }
 }
