@@ -11,9 +11,11 @@ public class Calculator {
 
     public Integer add(String numbers){
         if(numbers.isEmpty()) return 0;
-        if(numbers.split(",|\n").length == 1) return Integer.parseInt(numbers);
         numbers = correctForDelimiter(numbers);
         int[] numbersToAdd = Stream.of(numbers.split(",|\n")).mapToInt(Integer::parseInt).toArray();
+        if(checkForNegatives(numbersToAdd)){
+            throw new IllegalArgumentException("negatives not allowed");
+        }
         return Arrays.stream(numbersToAdd).sum();
     }
 
@@ -25,5 +27,14 @@ public class Calculator {
             return numbers.replace(matcher.group(1), ",");
         }
         return numbers;
+    }
+
+    private boolean checkForNegatives(int[] numbers){
+        for(int number : numbers){
+            if(number < 0){
+                return true;
+            }
+        }
+        return false;
     }
 }
