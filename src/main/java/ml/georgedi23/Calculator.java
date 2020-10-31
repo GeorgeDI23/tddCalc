@@ -1,5 +1,7 @@
 package ml.georgedi23;
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 public class Calculator {
@@ -10,7 +12,18 @@ public class Calculator {
     public Integer add(String numbers){
         if(numbers.isEmpty()) return 0;
         if(numbers.split(",|\n").length == 1) return Integer.parseInt(numbers);
+        numbers = correctForDelimiter(numbers);
         int[] numbersToAdd = Stream.of(numbers.split(",|\n")).mapToInt(Integer::parseInt).toArray();
         return Arrays.stream(numbersToAdd).sum();
+    }
+
+    private String correctForDelimiter(String numbers){
+        Pattern pattern = Pattern.compile("//(.)");
+        Matcher matcher = pattern.matcher(numbers);
+        if(matcher.find()) {
+            numbers = numbers.substring(4);
+            return numbers.replace(matcher.group(1), ",");
+        }
+        return numbers;
     }
 }

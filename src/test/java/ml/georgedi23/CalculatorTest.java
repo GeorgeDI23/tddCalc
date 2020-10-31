@@ -78,4 +78,35 @@ public class CalculatorTest {
         //Then
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void providedDelimiter(){
+        //Given
+        String given = "//;\n1;2";
+        int expected = 3;
+
+        //When
+        int actual = calc.add(given);
+
+        //Then
+        assertEquals(expected, actual);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void singleNegativeTest(){
+        //Given
+        String given = "//;\n1;-2";
+
+        //When
+        int actual = calc.add(given);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void doubleNegativeTest(){
+        //Given
+        String given = "//;\n-1;-2";
+
+        //When
+        int actual = calc.add(given);
+    }
 }
