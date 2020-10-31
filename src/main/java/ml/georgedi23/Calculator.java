@@ -13,8 +13,8 @@ public class Calculator {
         if(numbers.isEmpty()) return 0;
         numbers = correctForDelimiter(numbers);
         int[] numbersToAdd = Stream.of(numbers.split(",|\n")).mapToInt(Integer::parseInt).toArray();
-        if(checkForNegatives(numbersToAdd)){
-            throw new IllegalArgumentException("negatives not allowed");
+        if(checkForNegatives(numbersToAdd).length > 0){
+            throw new IllegalArgumentException("negatives not allowed: " + Arrays.toString(checkForNegatives(numbersToAdd)));
         }
         return Arrays.stream(numbersToAdd).sum();
     }
@@ -29,12 +29,14 @@ public class Calculator {
         return numbers;
     }
 
-    private boolean checkForNegatives(int[] numbers){
+    private int[] checkForNegatives(int[] numbers){
+        int[] negativeInts = new int[0];
         for(int number : numbers){
             if(number < 0){
-                return true;
+                negativeInts = Arrays.copyOf(negativeInts, negativeInts.length+1);
+                negativeInts[negativeInts.length-1] = number;
             }
         }
-        return false;
+        return negativeInts;
     }
 }

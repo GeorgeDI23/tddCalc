@@ -1,13 +1,18 @@
 package ml.georgedi23;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.*;
 
 public class CalculatorTest {
 
     Calculator calc;
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
     @Before
     public void setUp() throws Exception {
@@ -105,6 +110,39 @@ public class CalculatorTest {
     public void doubleNegativeTest(){
         //Given
         String given = "//;\n-1;-2";
+
+        //When
+        int actual = calc.add(given);
+    }
+
+    @Test
+    public void singleNegativeMessageTest() throws Exception{
+        //Given
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("negatives not allowed: [-1]");
+        String given = "//;\n-1;2";
+
+        //When
+        int actual = calc.add(given);
+    }
+
+    @Test
+    public void doubleNegativeMessageTest() throws Exception{
+        //Given
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("negatives not allowed: [-1, -2]");
+        String given = "//;\n-1;-2";
+
+        //When
+        int actual = calc.add(given);
+    }
+
+    @Test
+    public void mixedNegativeMessageTest() throws Exception{
+        //Given
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("negatives not allowed: [-1, -3]");
+        String given = "//;\n-1;2;-3";
 
         //When
         int actual = calc.add(given);
