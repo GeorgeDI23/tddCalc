@@ -65,4 +65,17 @@ public class CalculatorTest {
         //Then
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void addNumbersWithNewlineSeparator(){
+        //Given
+        String given = "1\n2,3\n4,5\n6,7,8\n9,45";
+        int expected = 90;
+
+        //When
+        int actual = calc.add(given);
+
+        //Then
+        assertEquals(expected, actual);
+    }
 }

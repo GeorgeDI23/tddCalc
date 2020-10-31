@@ -9,8 +9,8 @@ public class Calculator {
 
     public Integer add(String numbers){
         if(numbers.isEmpty()) return 0;
-        if(numbers.split(",").length == 1) return Integer.parseInt(numbers);
-        int[] numbersToAdd = Stream.of(numbers.split(",")).mapToInt(Integer::parseInt).toArray();
+        if(numbers.split(",|\n").length == 1) return Integer.parseInt(numbers);
+        int[] numbersToAdd = Stream.of(numbers.split(",|\n")).mapToInt(Integer::parseInt).toArray();
         return Arrays.stream(numbersToAdd).sum();
     }
 }
